@@ -2,18 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
+import { Header } from "./App";
 
-const text = "Hello world";
-const elem = (
-  <div>
-    <h1 className="text">Text: {text}</h1>
-    <input type="text" />
-    <button>Click</button>
-  </div>
-);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(elem);
+root.render(
+	<>
+	<App />
+	<Header />
+	</>
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
