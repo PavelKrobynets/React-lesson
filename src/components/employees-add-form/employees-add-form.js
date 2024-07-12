@@ -9,6 +9,7 @@ export class EmployeesAddForm extends Component {
       salary: "",
     };
   }
+	
 
   onValueChange = (e) => {
     this.setState({
@@ -18,10 +19,14 @@ export class EmployeesAddForm extends Component {
 
   render() {
     const { name, salary } = this.state;
+		const { onAdd } = this.props;
     return (
       <div className="app-add-form">
         <h3>Add new employee</h3>
-        <form className="add-form d-flex">
+        <form className="add-form d-flex" onSubmit={(e) => {
+					e.preventDefault()
+					onAdd(name, salary);
+				}}>
           <input
             type="text"
             placeholder="Add name"
