@@ -13,9 +13,9 @@ class App extends Component {
     super(props);
     this.state = {
       data: [
-        { name: "John S.", salary: 800, increase: false, like: true, id: 1 },
-        { name: "Alex P.", salary: 1200, increase: true, like: false, id: 2 },
-        { name: "Bob L.", salary: 500, increase: false, like: false, id: 3 },
+        { name: "John S.", salary: 800, increase: false, rise: true, id: 1 },
+        { name: "Alex P.", salary: 1200, increase: true, rise: false, id: 2 },
+        { name: "Bob L.", salary: 500, increase: false, rise: false, id: 3 },
       ],
     };
   }
@@ -37,7 +37,7 @@ class App extends Component {
       name,
       salary,
       increase: false,
-      like: false,
+      rise: false,
       id: this.state.data.length + 1,
     };
     this.setState(({data}) => {
@@ -47,16 +47,43 @@ class App extends Component {
 			}
 		})
   };
+
+	onToggleProp = (id, prop) => {
+		// this.setState(({data}) => {
+		// 	const index = data.findIndex(elem => elem.id === id);
+		// 	const oldItem = data[index];
+		// 	const newItem = {...oldItem, increase: !oldItem.increase};
+		// 	const newArr = [...data.slice(0, index), newItem, ...data.slice(index +
+		// 		1)];
+		// 		return{
+		// 			data: newArr
+		// 		}
+		// })
+		this.setState(({data}) => ({
+			data: data.map(item => {
+				if(item.id === id) {
+					return {...item, [prop]: !item[prop]}
+					}
+					return item;
+				})
+		}))
+	}
 	
+
   render() {
+		const employees = this.state.data.length;
+		const increased = this.state.data.filter(item => item.rise).length;
     return (
       <div className="app">
-        <AppInfo />
+        <AppInfo employees={employees} increased={increased}/>
         <div className="search-panel">
           <SearchPanel />
           <AppFilter />
         </div>
-        <EmployeesList data={this.state.data} onDelete={this.deleteItem} />
+        <EmployeesList data={this.state.data} 
+				onDelete={this.deleteItem}  
+				onToggleProp= {this.onToggleProp}
+				/>
         <EmployeesAddForm onAdd={this.addItem} />
       </div>
     );
